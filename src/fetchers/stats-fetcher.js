@@ -18,6 +18,7 @@ const fetcher = (variables, token) => {
           contributionsCollection {
             totalCommitContributions
             restrictedContributionsCount
+            totalRepositoriesWithContributedCommits
           }
           repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) {
             totalCount
@@ -132,7 +133,7 @@ async function fetchStats(
   }
 
   stats.totalPRs = user.pullRequests.totalCount;
-  stats.contributedTo = user.repositoriesContributedTo.totalCount;
+  stats.contributedTo = user.contributionsCollection.totalRepositoriesWithContributedCommits;
 
   stats.totalStars = user.repositories.nodes.reduce((prev, curr) => {
     return prev + curr.stargazers.totalCount;
