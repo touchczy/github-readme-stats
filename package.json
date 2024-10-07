@@ -4,6 +4,7 @@
   "description": "Dynamically generate stats for your github readmes",
   "main": "index.js",
   "scripts": {
+    "dev": "node ./dev.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "theme-readme-gen": "node scripts/generate-theme-doc",
