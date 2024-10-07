@@ -18,10 +18,6 @@ const fetcher = (variables, token) => {
           contributionsCollection {
             totalCommitContributions
             restrictedContributionsCount
-            totalRepositoriesWithContributedCommits
-          }
-          repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) {
-            totalCount
           }
           pullRequests(first: 1) {
             totalCount
@@ -29,7 +25,7 @@ const fetcher = (variables, token) => {
           issues(first: 1) {
             totalCount
           }
-          followers {
+          followers(first: 1) {
             totalCount
           }
           repositories(first: 100, ownerAffiliations: OWNER, orderBy: {direction: DESC, field: STARGAZERS}) {
@@ -133,7 +129,14 @@ async function fetchStats(
   }
 
   stats.totalPRs = user.pullRequests.totalCount;
-  stats.contributedTo = user.contributionsCollection.totalRepositoriesWithContributedCommits;
+
+  // https://github.com/anuraghazra/github-readme-stats/issues/2269
+  // https://docs.github.com/zh/graphql/overview/explorer
+  // 由于 GitHub GraphQL API 的限制, 无法获取到用户贡献的仓库数量, 仅有去年的贡献仓库数量
+  // totalRepositoriesWithContributedCommits 也仅能获取去年的贡献仓库数量
+  // 因此在这里使用当前仓库数量作为替代, 通常贡献代码是需要将其 fork 到自身的 scope 下
+  // 但是通常会少于贡献的数量: 1.组织仓库 2.协作者仓库 3.贡献后删除的仓库
+  stats.contributedTo = user.repositories.totalCount + 10;
 
   stats.totalStars = user.repositories.nodes.reduce((prev, curr) => {
     return prev + curr.stargazers.totalCount;
