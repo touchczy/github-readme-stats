@@ -136,7 +136,7 @@ async function fetchStats(
   // totalRepositoriesWithContributedCommits 也仅能获取去年的贡献仓库数量
   // 因此在这里使用当前仓库数量作为替代, 通常贡献代码是需要将其 fork 到自身的 scope 下
   // 但是通常会少于贡献的数量: 1.组织仓库 2.协作者仓库 3.贡献后删除的仓库
-  stats.contributedTo = user.repositories.totalCount + 10;
+  stats.contributedTo = user.repositories.totalCount + 16;
 
   stats.totalStars = user.repositories.nodes.reduce((prev, curr) => {
     return prev + curr.stargazers.totalCount;
