@@ -40,6 +40,7 @@ const createTextNode = ({
         x="${(showIcons ? 140 : 120) + shiftValuePos}" 
         y="12.5" 
         data-testid="${id}"
+        data-value="${value}"
       >${kValue}</text>
     </g>
   `;
