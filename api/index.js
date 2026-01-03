@@ -33,6 +33,7 @@ module.exports = async (req, res) => {
     disable_animations,
     border_radius,
     border_color,
+    number_format,
   } = req.query;
   let stats;
 
@@ -80,6 +81,7 @@ module.exports = async (req, res) => {
         border_color,
         locale: locale ? locale.toLowerCase() : null,
         disable_animations: parseBoolean(disable_animations),
+        number_format,
       }),
     );
   } catch (err) {
